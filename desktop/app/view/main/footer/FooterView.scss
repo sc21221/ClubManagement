@@ -1,0 +1,17 @@
+.footerview { 
+	border-left: 0; 
+	border-top: 0; 
+	color: white;
+	background-color: $base-app-color;
+}
+
+@include button-ui(
+  $ui: 'footerbutton',
+	$background-color: transparent,
+	$color: white,
+  $border-color: transparent
+  // $inner-border-color-focus: transparent,
+  // $inner-border-color-focus-over: transparent,
+  // $inner-border-color-focus-pressed: transparent,
+  // $background-color-over: $nav-base-color
+);

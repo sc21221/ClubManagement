@@ -1,0 +1,32 @@
+.menuview {
+	background-color: $base-color; 
+	font-size: '18px';
+	color: 'white';
+}
+
+$main-nav-width: dynamic(260px);
+$main-nav-collapsed-width: dynamic(64px);
+.main-nav-slid-out {
+	left: -$main-nav-width;
+}
+
+.main-nav-collapsed {
+	width: $main-nav-collapsed-width;
+}
+.main-nav-container {
+	position: relative;
+	transition: width 0.3s;
+	width: $main-nav-width;
+}
+$panel-navigation-background-color: #32404e;
+$panel-navigation-item-text-color: #fff;
+$treelist-font-size: 16px;
+
+$xnav-base-color: lighten(#191919, 10%);
+$nav-base-color: lighten($panel-navigation-background-color, 20%);
+$nav-text-color: white;
+$nav-bg-color-over: lighten($nav-base-color, 10%);
+$nav-bg-color-selected: lighten($nav-base-color, 5%);
+$nav-text-color-over: lighten($nav-text-color, 20%);
+$nav-indicator-color: $base-color;
+$nav-indicator-color-over: lighten($nav-indicator-color, 5%); 

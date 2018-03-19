@@ -1,0 +1,20 @@
+.headerview {
+	border-left: 0;
+	border-top: 0;
+	color: white;
+	background-color: $base-color
+}
+
+$nav-base-color: lighten(#191919, 10%);
+$nav-text-color: #bbb;
+
+@include button-ui(
+  $ui: 'headerbutton',
+  $background-color: transparent,
+	$icon-color: white,
+  $border-color: transparent
+  // $inner-border-color-focus: transparent,
+  // $inner-border-color-focus-over: transparent,
+  // $inner-border-color-focus-pressed: transparent,
+  // $background-color-over: $nav-base-color
+);
