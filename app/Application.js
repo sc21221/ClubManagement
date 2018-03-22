@@ -10,7 +10,10 @@ Ext.define('ClubManagement.Application', {
 		'ClubManagement.store.PaymentModeStore',
 		'ClubManagement.store.SalutationStore',
 		'ClubManagement.store.Users',
-		'ClubManagement.store.RolesStore'
+		'ClubManagement.store.RolesStore',
+		'ClubManagement.store.PrintMenuStore',
+		'ClubManagement.store.FeesStore',
+		'ClubManagement.store.MemberFeeStore'
 	]
 
 	, launch: function () {

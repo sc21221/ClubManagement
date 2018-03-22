@@ -8,7 +8,8 @@ Ext.define('ClubManagement.view.Members.MemberEditView',{
     	'ClubManagement.store.Members',
         'ClubManagement.model.Members',
         'ClubManagement.store.Sex',
-        'ClubManagement.view.main.MainViewModel'
+        'ClubManagement.view.main.MainViewModel',
+        'ClubManagement.store.FeesStore'
     ],
 
     controller: 'members-membereditview',
@@ -17,7 +18,6 @@ Ext.define('ClubManagement.view.Members.MemberEditView',{
     bind: {
         title: 'Details for ({selectedMember.Id}) {selectedMember.nachname}, {selectedMember.vorname}'
     },
-    title: 'xx',
     session: true,    
     tools: [{
         itemId: 'save',
@@ -25,7 +25,8 @@ Ext.define('ClubManagement.view.Members.MemberEditView',{
         handler: 'onSave'
     }],
     listeners: {
-        initialize: 'onInit'
+        initialize: 'onInit',
+        updatedata: 'onUpdateData'
     },  
     layout: {
         type: 'card',
@@ -136,6 +137,14 @@ Ext.define('ClubManagement.view.Members.MemberEditView',{
                 store: 'ClubManagement.store.PaymentModeStore',
                 bind: '{selectedMember.zahlungskz}'
             },{
+                label: 'Beitrag',
+                // bind: '{}',
+                xtype: 'combobox',
+                queryMode: 'local',
+                displayField: 'displayText',
+                valueField: 'displayText',           
+                store: 'ClubManagement.store.FeesStore'
+            },{
                 label: 'Kontoinhaber',
                 name: 'kontoinhaber',
                 bind: '{selectedMember.kontoinhaber}'
@@ -160,6 +169,23 @@ Ext.define('ClubManagement.view.Members.MemberEditView',{
                 name: 'kontonummer',
                 bind: '{selectedMember.kontonummer}'
             }]
+        },{
+            xtype: 'grid',
+            iconCls: 'x-fa fa-usd',
+            reference: 'gridFeeAssignment',
+            selectable: {
+                mode: 'multi',
+                drag: true,
+                checkbox: true
+            },
+            listeners: {
+                selectionchange: 'onFeeAssignmentSelectionChange'
+            },
+            store: 'ClubManagement.store.FeesStore',
+            columns: [
+                { text: 'Bezeichnung', dataIndex: 'bezeichnung', editable: false, flex: 1 },
+                { text: 'Bemerkung', dataIndex: 'bemerkung', editable: false, flex: 1 }
+            ]
         },{
             xtype: 'formpanel',
             iconCls: 'x-fa fa-calendar',
@@ -190,141 +216,3 @@ Ext.define('ClubManagement.view.Members.MemberEditView',{
         }]
     }]
 });
-
-
-    // ,{
-    //         title:'Bankdaten',
-    //         layout:'form',
-    //         // defaults: {width: 120},
-    //         // defaultType: 'textfield',
-
-    //         items: [{
-    //           layout:'column',
-    //           items:[{
-    //             columnWidth:.5,
-    //             layout: 'form',
-	//             items: [{
-	//             	xtype:'textfield',
-	//             	width: 240,
-	//                 fieldLabel: 'BLZ',
-	//                 name: 'blz',
-	// 				maskRe: /[0-9]/,
-	//                 maxLength: 8,
-	//                 maxLengthText: 'Feld BLZ darf max. 8 Zeichen lang sein!'
-	//             },{
-	//             	xtype:'textfield',
-	//             	width: 240,
-	//                 fieldLabel: 'Kontonummer',
-	//                 name: 'kontonummer',
-	// 				maskRe: /[0-9]/,
-	//                 maxLength: 30,
-	//                 maxLengthText: 'Feld Kontonummer darf max. 30 Zeichen lang sein!'
-	//             },{
-	//             	xtype:'textfield',
-	//             	width: 240,
-	//                 fieldLabel: 'Bank',
-	//                 name: 'bank',
-	//                 maxLength: 20,
-	//                 maxLengthText: 'Feld Bank darf max. 20 Zeichen lang sein!'
-	//             },{
-	//             	xtype:'textfield',
-	//             	width: 240,
-	//                 fieldLabel: 'Kontoinhaber',
-	//                 name: 'kontoinhaber',
-	//                 maxLength: 60,
-	//                 maxLengthText: 'Feld Kontoinhaber darf max. 20 Zeichen lang sein!'
-	//             }]
-    //           },{
-    //             layout:'form',
-    //             columnWidth:.5,
-	//             items: [{
-	//             	xtype:'textfield',
-	//             	width: 240,
-	//                 fieldLabel: 'BIC',
-	//                 name: 'BIC',
-	// 				maxLength: 11,
-	//                 maxLengthText: 'Feld BIC darf max. 11 Zeichen lang sein!'
-	//             },{
-	//             	xtype:'textfield',
-	//             	width: 240,
-	//                 fieldLabel: 'IBAN',
-	//                 name: 'IBAN',
-	//                 maxLength: 34,
-	//                 maxLengthText: 'Feld IBAN darf max. 34 Zeichen lang sein!'
-	//             }]
-    //           }]
-    //         }]
-    //     },{
-    //         cls:'x-plain',
-    //         title:'Beitragsdaten',
-    //         layout:'form',
-    //         defaults: {width: 230},
-    //         defaultType: 'textfield',
-    //         items: [{
-    //           fieldLabel: 'Geschlecht',
-    //           name: 'geschlecht'
-    //           ,xtype:'combo',typeAhead: true,triggerAction: 'all',store: 'sex',hiddenName:'geschlecht', valueField: 'myId',displayField: 'displayText',mode: 'local',lazyRender: true,listClass: 'x-combo-list-small'
-    //         },{
-    //           fieldLabel: 'Rechnungs-KZ',
-    //           name: 'rekz'
-    //           ,xtype:'combo',typeAhead: true,triggerAction: 'all',
-    //           //store: ReKzStore,
-    //           hiddenName:'rekz', valueField: 'myId',displayField: 'displayText',mode: 'local',lazyRender: true,listClass: 'x-combo-list-small'
-    //         },{
-    //           fieldLabel: 'Zahlungs-KZ',
-    //           name: 'zahlungskz'
-    //           ,xtype:'combo',typeAhead: true,triggerAction: 'all',
-    //           //store: ZahlKzStore,
-    //           hiddenName:'zahlungskz',valueField: 'myId',displayField: 'displayText',mode: 'local',lazyRender: true,listClass: 'x-combo-list-small'
-    //         },{
-    //           fieldLabel: 'Beitrag 1',
-    //           name: 'beitrag_id'
-    //           ,xtype:'combo',typeAhead: true,triggerAction: 'all',
-    //           //store: BeitragsklassenStore,
-    //           hiddenName:'beitrag_id',valueField: 'id',displayField: 'bezeichnung',mode: 'local',lazyRender: true,listClass: 'x-combo-list-small'
-    //         },{
-    //           fieldLabel: 'Beitrag 2',
-    //           name: 'beitrag_id2'
-    //           ,xtype:'combo',typeAhead: true,triggerAction: 'all',
-    //           //store: BeitragsklassenStore,
-    //           hiddenName:'beitrag_id2',valueField: 'id',displayField: 'bezeichnung',mode: 'local',lazyRender: true,listClass: 'x-combo-list-small'
-    //         },{
-    //           fieldLabel: 'Beitrag 3',
-    //           name: 'beitrag_id3'
-    //           ,xtype:'combo',typeAhead: true,triggerAction: 'all',
-    //           //store: BeitragsklassenStore,
-    //           hiddenName:'beitrag_id3',valueField: 'id',displayField: 'bezeichnung',mode: 'local',lazyRender: true,listClass: 'x-combo-list-small'
-    //         }]
-    //     },{
-    //       cls:'x-plain',
-    //       title:'Daten',
-    //       layout:'form',
-    //       defaults: {width: 230},
-    //       defaultType: 'textfield',
-    //       items: [{
-    //         xtype:'textfield',
-    //         fieldLabel: 'Beruf',
-    //         name: 'beruf'
-    //       },{
-    //         fieldLabel: 'Geburtsdatum',
-    //         name: 'gebdat',
-    //         xtype: 'xdatefield',
-    //         allowBlank:false
-    //       },{
-    //         fieldLabel: 'Eintrittsdatum',
-    //         name: 'eindat',
-    //         xtype: 'xdatefield',
-    //         allowBlank:false
-    //       },{
-    //         fieldLabel: 'Sonderdatum',
-    //         name: 'sonderdat',
-    //         xtype: 'xdatefield',
-    //         allowBlank:true
-    //       },{
-    //         fieldLabel: 'Austrittsdatum',
-    //         name: 'ausdat',
-    //         xtype: 'xdatefield',
-    //         allowBlank:true
-    //       }]
-    //   }]
-    //}

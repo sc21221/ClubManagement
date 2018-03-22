@@ -1,28 +1,29 @@
- Ext.define('ClubManagement.store.Members', {
+ Ext.define('ClubManagement.store.MemberFeeStore', {
     extend: 'Ext.data.Store'
 
-    , alias: 'store.members'
-    , model: 'ClubManagement.model.Members'
+    , alias: 'store.memberfee'
+    , model: 'ClubManagement.model.MemberFee'
     , pageSize: 500
-    , autoSync: false
+    , autoSync: true
     , proxy: {
         type: 'direct'
          , api: {
-            prefix: 'Members',
+            prefix: 'MemberFee',
             read: 'getGrid',
             create: 'create',
             update: 'update',
             destroy: 'delete'
         }
         , metadata: {
-            _table: 'mitglied',
-            _sort: 'nachname',
-            _key: 'Id'
+            _table: 'mitglied_beitrag',
+            _sort: 'mitglied_id',
+            _key: 'mitglied_id'
         }
         , reader: {
             totalProperty: 'total',
             rootProperty: 'data'
         }
     }
-   , autoLoad: true
+   , autoLoad: false
+   , remoteFilter: true
  });

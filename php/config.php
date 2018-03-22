@@ -58,6 +58,62 @@ function get_extdirect_api($caller) {
                 )
             )
         )
+        , 'Fees'=>array(
+            'methods'=>array(
+                'create'=>array(
+                    'len'=>1
+                    ,'metadata' => array(
+                        'params' => array('_table')
+                    )
+                ),
+                'update'=>array(
+                    'len'=>1
+                    ,'metadata' => array(
+                        'params' => array('_table','_key')
+                    )
+                ),
+                'delete'=>array(
+                    'len'=>1
+                    ,'metadata' => array(
+                        'params' => array('_table','_key')
+                    )
+                ),
+                'getGrid'=>array(
+                    'len'=>1
+                    ,'metadata' => array(
+                        'params' => array('_table','_sort')
+                    )
+                )
+            )
+        )
+        , 'MemberFee'=>array(
+            'methods'=>array(
+                'create'=>array(
+                    'len'=>1
+                    ,'metadata' => array(
+                        'params' => array('_table')
+                    )
+                ),
+                'update'=>array(
+                    'len'=>1
+                    ,'metadata' => array(
+                        'params' => array('_table','_key')
+                    )
+                ),
+                'delete'=>array(
+                    'len'=>1
+                    ,'metadata' => array(
+                        'params' => array('_table','_key')
+                    )
+                ),
+                'getGrid'=>array(
+                    'len'=>1
+                    ,'metadata' => array(
+                        'params' => array('_table','_sort')
+                    )
+                )
+            )
+        )
         ,'Club'=>array(
             'methods'=>array(
                 'create'=>array(

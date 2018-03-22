@@ -129,15 +129,29 @@
         return $records;
     }
 
-    public function getGrid($params, $metadata) {
+    public function getGrid($_params, $metadata) {
         $_db = $this->_db;
+        $params = is_array($_params) ? $_params[0] : $_params;
 
         error_log("dbBase:getGrid()");
         error_log(print_r($params, true));
 
         $table = $this->getTableFromMetadata($metadata);
+        $filters = isset($params->filter) ? $params->filter : array();
+        
         $total = 0;
         $sql = "SELECT COUNT(*) as countUsers from $table";
+        $where = "";
+        foreach($filters as $filter)
+        {
+            $where .= ($where == "") ? " WHERE " : " AND ";
+            if( $filter->property == "Id")
+                $where .= $filter->property . "=" . $filter->value;
+            else
+                $where .= $filter->property . "='" . $filter->value . "'";
+        }
+        if( $where !="") $sql .= $where;
+
         error_log("dbBase:getGrid(): sql=$sql");
         $_totalresult = $_db->query($sql) or die('Connection Error: ' . $_db->connect_error);
         if( $totalrow = $_totalresult->fetch_assoc())
@@ -147,8 +161,9 @@
 
         $start = isset($params->start) ? $params->start : 0;
         $limit = isset($params->limit) ? $params->limit : 25;
-        $isort = $this->getSortFromParameters($params);
+        $isort = $this->getSortFromParameters($metadata);
         $sql = "SELECT * FROM $table";
+        if( $where !="") $sql .= $where;
         if( !$this->IsNullOrEmptyString($isort)) 
         {
             $sql .= " ORDER BY $isort ";
