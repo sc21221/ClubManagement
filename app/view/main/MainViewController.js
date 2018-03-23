@@ -60,6 +60,7 @@ Ext.define('ClubManagement.view.main.MainViewController', {
 		menuview.setSelection(node);
 		var vm = this.getViewModel(); 
 		vm.set('heading', node.get('text'));
+		vm.set('detailCollapsed', true);
 	},
 
 	onMenuViewSelectionChange: function (tree, node) {

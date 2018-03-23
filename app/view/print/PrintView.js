@@ -2,6 +2,7 @@
 Ext.define('ClubManagement.view.print.PrintView',{
     extend: 'Ext.Container',
     xtype: 'ClubManagement-printview',
+    itemId: 'ClubManagement-printview',
     requires: [
         'ClubManagement.view.print.PrintViewController',
         'ClubManagement.view.print.PrintViewModel'

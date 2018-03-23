@@ -6,11 +6,12 @@ Ext.define('ClubManagement.view.home.HomeView',{
         'ClubManagement.view.home.HomeViewController',
         'ClubManagement.view.home.HomeViewModel'
     ],
-
+    xtype: 'ClubManagement-homeview',
+    itemId: 'ClubManagement-homeview',
     controller: 'home-homeview',
     viewModel: {
         type: 'home-homeview'
     },
 
-    html: 'Hello, World!!'
+    html: '<h2>Members Management</h2>'
 });

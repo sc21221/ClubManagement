@@ -103,13 +103,13 @@ function get_extdirect_api($caller) {
                 'delete'=>array(
                     'len'=>1
                     ,'metadata' => array(
-                        'params' => array('_table','_key')
+                        'params' => array('_table', '_key')
                     )
                 ),
                 'getGrid'=>array(
                     'len'=>1
                     ,'metadata' => array(
-                        'params' => array('_table','_sort')
+                        'params' => array('_table','_sort','_fields')
                     )
                 )
             )

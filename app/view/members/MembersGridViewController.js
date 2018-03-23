@@ -5,7 +5,13 @@ Ext.define('ClubManagement.view.members.MembersGridViewController', {
     , onGridInit: function() {
         console.log("MembersGrid: onGridInit()");
     }
-    
+
+    , onAdd: function() {
+        var store = Ext.getStore('Members');
+        var newUser = store.add(new ClubManagement.model.Members());
+        this.lookup("membersgrid").setSelection(newUser);
+    }
+
     , onActionSearch: function (cmp) {
         var me          = this,
             searchValue = cmp.getValue(),
@@ -39,7 +45,8 @@ Ext.define('ClubManagement.view.members.MembersGridViewController', {
 
     , onMemberSelect: function(grid, person) {
         console.log("onMemberSelect: person=" + person.get('nachname'));
-        this.getViewModel().set('selectedMember', person);
+        ClubManagement.getApplication().changeDetailView('ClubManagement-membereditview', 'Details for Member');
+        // this.getViewModel().set('selectedMember', person);
         Ext.getCmp('ClubManagement-membereditview').getViewModel().set('selectedMember', person);
         this.getViewModel().set('detailCollapsed', false);
     }

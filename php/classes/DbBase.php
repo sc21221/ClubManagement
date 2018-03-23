@@ -2,13 +2,14 @@
 
  class DbBase {
 
-    private $_db;
+    protected $_db;
     protected $_result;
     public $results;
 
     const FIELD_TABLE = "_table";
     const FIELD_SORT = "_sort";
     const FIELD_ID = "_key";
+    const FIELD_FIELDS = "_fields";
 
     public function __construct() { 
 
@@ -28,6 +29,14 @@
     public function getTableFromMetadata($params)
     {
         return $this->getKeyFromMetadata($params, self::FIELD_TABLE);
+    }
+    
+    public function getFieldsFromMetadata($params)
+    {
+        $f = $this->getKeyFromMetadata($params, self::FIELD_FIELDS);
+        if($f == "")
+            $f = "*";
+        return $f;
     }
     
     public function getSortFromParameters($params)
@@ -134,9 +143,12 @@
         $params = is_array($_params) ? $_params[0] : $_params;
 
         error_log("dbBase:getGrid()");
-        error_log(print_r($params, true));
+        // error_log(print_r($params, true));
+        // error_log(print_r($metadata, true));
 
         $table = $this->getTableFromMetadata($metadata);
+        $fields = $this->getFieldsFromMetadata($metadata);
+        error_log("Fields: $fields");
         $filters = isset($params->filter) ? $params->filter : array();
         
         $total = 0;
@@ -162,7 +174,7 @@
         $start = isset($params->start) ? $params->start : 0;
         $limit = isset($params->limit) ? $params->limit : 25;
         $isort = $this->getSortFromParameters($metadata);
-        $sql = "SELECT * FROM $table";
+        $sql = "SELECT $fields FROM $table";
         if( $where !="") $sql .= $where;
         if( !$this->IsNullOrEmptyString($isort)) 
         {
@@ -295,7 +307,7 @@
         // $sql = "DELETE FROM $table WHERE $idField=$uId;";         
         error_log("DbBase:delete(Id=$uId): SQL=$sql");
 
-        $_result = $_db->query($sql);
+        $_result = $this->_db->query($sql);
         //   or die("Error Deleting Record(sql=$sql): " . $_db->error_get_last);
         
         return $_result;

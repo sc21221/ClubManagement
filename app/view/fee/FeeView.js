@@ -1,7 +1,10 @@
 
 Ext.define('ClubManagement.view.fee.FeeView',{
     extend: 'Ext.panel.Panel',
+    
     xtype: 'ClubManagement-feesview',
+    itemId: 'ClubManagement-feesview',
+
     requires: [
         'ClubManagement.view.fee.FeeViewController',
         'ClubManagement.view.fee.FeeViewModel',

@@ -1,7 +1,10 @@
 
 Ext.define('ClubManagement.view.members.MembersGridView',{
     extend: 'Ext.Panel',
-	xtype: 'ClubManagement-membersgridview',
+    
+    xtype: 'ClubManagement-membersgridview',
+    itemId: 'ClubManagement-membersgridview',
+
     requires: [
         'ClubManagement.view.members.MembersGridViewController',
     	'ClubManagement.store.Members',
@@ -15,6 +18,17 @@ Ext.define('ClubManagement.view.members.MembersGridView',{
 
     reference: 'membersgridview',
     layout: 'vbox',
+    tools: [
+        {
+            type: 'help',
+            handler: function() {
+                
+            }
+        },{
+            type: 'plus',
+            handler: 'onAdd'
+        }
+    ],
 
     items: [{
         xtype: 'toolbar',
@@ -29,6 +43,7 @@ Ext.define('ClubManagement.view.members.MembersGridView',{
         }]
     }, {
         xtype: 'grid',
+        reference: 'membersgrid',
         flex: 1,
         selectable: {mode: 'single'},
         bind: {
@@ -46,37 +61,9 @@ Ext.define('ClubManagement.view.members.MembersGridView',{
             { text: 'ZahlungsKz', dataIndex: 'zahlungskz', editable: false, hidden: true }
         ]
         , plugins: {
-            pagingtoolbar: true,
-            // grideditable: {
-            //     triggerEvent: 'childdoubletap',
-            //     enableDeleteButton: true,
-            //     formConfig: null,
-            //     defaultFormConfig: {
-            //         xtype: 'formpanel',
-            //         scrollable: true,
-            //         items: [{
-            //             xtype: 'fieldset'
-            //         }]
-            //     },
-            //     toolbarConfig: {
-            //         xtype: 'titlebar',
-            //         docked: 'top',
-            //         items: [{
-            //             xtype: 'button',
-            //             ui: 'decline',
-            //             text: 'Cancel',
-            //             align: 'left',
-            //             action: 'cancel'
-            //         }, {
-            //             xtype: 'button',
-            //             ui: 'confirm',
-            //             text: 'Submit',
-            //             align: 'right',
-            //             action: 'submit'
-            //         }]
-            //     },
-            // }
-            // ,gridviewoptions: true  
+            pagingtoolbar: {
+                pageSize: 100
+            }
         } 
         , listeners: {
             initialize: 'onGridInit'

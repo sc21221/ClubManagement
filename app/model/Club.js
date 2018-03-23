@@ -2,7 +2,7 @@ Ext.define('ClubManagement.model.Club', {
     extend: 'ClubManagement.model.Base',
 	idProperty: 'Id',
     fields: [
-          { name: 'Id', type: 'int' }
+          { name: 'clubId', type: 'string' }
         , { name: 'name', type: 'string' }
         , { name: 'zusatz', type: 'string' }
         , { name: 'vorstand', type: 'string' }

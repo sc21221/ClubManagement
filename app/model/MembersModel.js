@@ -1,9 +1,9 @@
 Ext.define('ClubManagement.model.Members', {
 	extend: 'ClubManagement.model.Base',
-	idProperty: 'Id',
+	idProperty: 'memberId',
     fields: [
-        {name: 'Id', type: 'int'},
-		{name: 'verein', type: 'int'},
+        {name: 'memberId', type: 'string'},
+		{name: 'verein', type: 'string'},
 		{name: 'nachname', type: 'string'},
 		{name: 'vorname', type: 'string'},
 		{name: 'anrede', type: 'string'},

@@ -4,8 +4,10 @@
     , alias: 'store.memberfee'
     , model: 'ClubManagement.model.MemberFee'
     , pageSize: 500
-    , autoSync: true
-    , proxy: {
+    , autoSync: false
+    , autoLoad: false
+    , remoteFilter: true
+     , proxy: {
         type: 'direct'
          , api: {
             prefix: 'MemberFee',
@@ -16,14 +18,13 @@
         }
         , metadata: {
             _table: 'mitglied_beitrag',
-            _sort: 'mitglied_id',
-            _key: 'mitglied_id'
+            _sort: 'memberId',
+            _key: 'feeMemberId',
+            _fields: "CONCAT(memberId,'/',beitrag_id) as id,memberId,beitrag_id"
         }
         , reader: {
             totalProperty: 'total',
             rootProperty: 'data'
         }
     }
-   , autoLoad: false
-   , remoteFilter: true
  });

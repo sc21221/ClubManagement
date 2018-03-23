@@ -8,5 +8,9 @@ Ext.define('ClubManagement.model.Users', {
 		{name: 'password', type: 'string'},
 		{name: 'role', type: 'string'},
 	],
-	
+	validators: {
+        userId: {type: 'presence', message: 'User ID darf nicht leer sein!'},
+        password: { type: 'length', min: 6 },
+        role: { type: 'inclusion', list: ['admin', 'user'], message: 'entweder user oder Administrator' }
+    }
 });

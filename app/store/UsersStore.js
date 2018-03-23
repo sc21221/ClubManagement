@@ -4,7 +4,7 @@
     , alias: 'store.users'
     , model: 'ClubManagement.model.Users'
     , pageSize: 500
-    , autoSync: true
+    , autoSync: false
     , proxy: {
         type: 'direct'
          , api: {

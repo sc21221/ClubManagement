@@ -10,6 +10,6 @@ Ext.define('ClubManagement.view.main.MainView', {
 		{ xtype: 'ClubManagement-headerview',     docked: 'top',    reference: 'ClubManagement-headerview',     bind: {height: '{ClubManagement_headerview_height}'} },
 		{ xtype: 'ClubManagement-footerview',     docked: 'bottom', reference: 'ClubManagement-footerview',     bind: {height: '{ClubManagement_footerview_height}'} },
 		{ xtype: 'ClubManagement-centerview',                       reference: 'ClubManagement-centerview' },
-		{ xtype: 'ClubManagement-membereditview',     docked: 'right',  reference: 'ClubManagement-membereditview',     bind: {width:  '{ClubManagement_detailview_width}'}  },
+		{ xtype: 'ClubManagement-detailview',     docked: 'right',  reference: 'ClubManagement-detailview',     bind: {width:  '{ClubManagement_detailview_width}'}  },
 	]
 });

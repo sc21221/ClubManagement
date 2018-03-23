@@ -21,8 +21,8 @@ Ext.define('ClubManagement.view.Members.MemberEditViewController', {
         if( r && r.data && r.Id !=="" )
         {
             store.clearFilter();
-            store.filter('mitglied_id', r.data.Id);
-            console.log("MemberEditViewController:getFeeSelection(): load for Member Id=" + r.data.Id);
+            store.filter('memberId', r.data.memberId);
+            console.log("MemberEditViewController:getFeeSelection(): load for Member Id=" + r.data.memberId);
             //Server side filtering requires a load call
             store.load({
                 scope: this,
@@ -41,7 +41,7 @@ Ext.define('ClubManagement.view.Members.MemberEditViewController', {
                         }
                     });
                     grid.setSelection(selection);
-
+                    this.getViewModel().set("assignmentChanged", false);
                 }
             });
 
@@ -50,7 +50,7 @@ Ext.define('ClubManagement.view.Members.MemberEditViewController', {
     }
     , onFeeAssignmentSelectionChange: function(grid, selection, opts)
     {
-        console.log(selection);
+        this.getViewModel().set("assignmentChanged", true);
     }
     , onSave: function () 
     {        
@@ -59,12 +59,84 @@ Ext.define('ClubManagement.view.Members.MemberEditViewController', {
         store.sync({
             success: function(b, o) {
                 console.log("store: sync-success");
+                o.viewmodel.set('detailCollapsed', true);
+                Ext.toast('Mitglied gespeichert!', 2500);
             },
             failure: function(b, o) {
                 console.log("store: sync-failure: ");
                 console.log(b.exceptions);
-            }
+                Ext.Msg.alert("User", "Mitglied konnte nicht gespeichert werden:" + b.exceptions);
+            },
+            viewmodel: this.getViewModel()
         });
+        if(this.getViewModel().get("assignmentChanged"))
+        {
+            // Sync Member-Fee Assignment
+            var memberRecord = this.getViewModel().get('selectedMember');
+            var grid = this.lookupReference("gridFeeAssignment");
+            var feestore = Ext.getStore('ClubManagement.store.MemberFeeStore');
+            var selected = grid.getSelected().items;
+            var beitrag_id2del = "";
+
+            // Delete no longer assigned Fees
+            feestore.each(function(record) {
+                // if( record ){
+                    console.log(record);
+                    console.log(grid.getSelected().find("id",record.get("beitrag_id")));
+                    if( !grid.getSelected().find("id",record.get("beitrag_id")))
+                    feestore.remove(record);
+                    beitrag_id2del += record.get("beitrag_id") + ";";
+                // }
+            });
+            // Add new assigned Fees
+            Ext.Array.each(selected, function(record){
+                if( !feestore.findRecord("beitrag_id", record.get("id")))
+                {
+                    feestore.add(new ClubManagement.model.MemberFee(
+                            { 
+                                mitglied_id: memberRecord.get("Id"),
+                                beitrag_id: record.get("id")
+                            }));
+                }
+            });
+            
+            // feestore.getProxy().metadata.member_id = memberRecord.get("Id");
+            // feestore.getProxy().metadata.beitrag_id2del = beitrag_id2del;
+
+            feestore.sync({
+                success: function(b, o) {
+                    console.log("feestore: sync-success");
+                    o.viewmodel.set('detailCollapsed', true);
+                    Ext.toast('Mitgliedsbeiträge gespeichert!', 2500);
+                   },
+                failure: function(b, o) {
+                    console.log("feestore: sync-failure: ");
+                    console.log(b.exceptions);
+                },
+                viewmodel: this.getViewModel()
+            });
+            // var dataToPost = {
+            //     action: 'MemberFee',
+            //     data: selected,
+            //     metadata: {
+            //         _table: 'mitglied_beitrag',
+            //         _key: 'mitglied_id'
+            //     },
+            //     method: 'update'
+            // };
+            // Ext.Ajax.request({
+            //     url: 'ajax_demo/sample.json',
+           
+            //     success: function(response, opts) {
+            //         var obj = Ext.decode(response.responseText);
+            //         console.dir(obj);
+            //     },
+           
+            //     failure: function(response, opts) {
+            //         console.log('server-side failure with status code ' + response.status);
+            //     }
+            // });
+        }
     }
 
     , onUpdateData: function() 

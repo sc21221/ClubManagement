@@ -16,7 +16,7 @@ Ext.define('ClubManagement.view.Members.MemberEditView',{
     viewModel: { type: 'ClubManagement-mainviewmodel'},
 
     bind: {
-        title: 'Details for ({selectedMember.Id}) {selectedMember.nachname}, {selectedMember.vorname}'
+        title: 'Details for {selectedMember.nachname}, {selectedMember.vorname}'
     },
     session: true,    
     tools: [{

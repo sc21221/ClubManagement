@@ -3,7 +3,7 @@
 
     , alias: 'store.members'
     , model: 'ClubManagement.model.Members'
-    , pageSize: 500
+    , pageSize: 100
     , autoSync: false
     , proxy: {
         type: 'direct'

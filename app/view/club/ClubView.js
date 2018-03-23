@@ -8,11 +8,17 @@ Ext.define('ClubManagement.view.club.ClubView',{
     ],
 
     xtype: 'ClubManagement-clubview',
+    itemId: 'ClubManagement-clubview',
+    
     controller: 'club-clubview',
     viewModel: {
         type: 'club-clubview'
     },
-
+    tools: [{
+        itemId: 'save',
+        type: 'save',
+        handler: 'onSave'
+    }],
     flex: 1,
     selectable: {mode: 'single'},
     bind: {
@@ -20,7 +26,9 @@ Ext.define('ClubManagement.view.club.ClubView',{
     },
     plugins: 
     {
-        type: 'grideditable'
+        grideditable: {
+            enableDeleteButton: false
+        }
     },
     columns: [
         { text: 'Id', dataIndex: 'Id', editable: false, hidden: true },
