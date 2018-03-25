@@ -94,7 +94,7 @@ Ext.define('ClubManagement.view.Members.MemberEditViewController', {
                 {
                     feestore.add(new ClubManagement.model.MemberFee(
                             { 
-                                mitglied_id: memberRecord.get("Id"),
+                                memberId: memberRecord.get("memberId"),
                                 beitrag_id: record.get("id")
                             }));
                 }

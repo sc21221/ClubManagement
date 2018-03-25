@@ -50,15 +50,19 @@ Ext.define('ClubManagement.view.members.MembersGridView',{
             store: 'Members',
         },
         columns: [
-            { text: 'Nachname', dataIndex: 'nachname', editable: true },
-            { text: 'Vorname', dataIndex: 'vorname', editable: true },
-            { text: 'Straße', dataIndex: 'strasse', editable: true },
-            { text: 'PLZ', dataIndex: 'plz', editable: true },
-            { text: 'Ort', dataIndex: 'ort', editable: true },
-            { text: 'Email', dataIndex: 'email', editable: true },
-            { text: 'Telefon', dataIndex: 'telefon1', editable: true },
-            { text: 'Geburtsdatum', dataIndex: 'gebdat', editable: true },
-            { text: 'ZahlungsKz', dataIndex: 'zahlungskz', editable: false, hidden: true }
+            { text: 'Nachname', dataIndex: 'nachname', editable: true, flex:3 },
+            { text: 'Vorname', dataIndex: 'vorname', editable: true, flex:3 },
+            { text: 'Straße', dataIndex: 'strasse', editable: true, flex:4 },
+            { text: 'PLZ', dataIndex: 'plz', editable: true, flex:2 },
+            { text: 'Ort', dataIndex: 'ort', editable: true, flex:3},
+            { text: 'Email', dataIndex: 'email', editable: true, flex:4 },
+            { text: 'Telefon', dataIndex: 'telefon1', editable: true, flex:3 },
+            { text: 'Geburtsdatum', dataIndex: 'gebdat', xtype: 'datecolumn', format: 'd.m.Y', editable: true, flex:2 },
+            { text: 'Eintrittsdatum', dataIndex: 'eindat', xtype: 'datecolumn', format: 'd.m.Y', editable: true, flex:2 },
+            { text: 'ZahlungsKz', dataIndex: 'zahlungskz', editable: false, hidden: true, flex:1 },
+            { text: 'Kontoinhaber', dataIndex: 'kontoinhaber', editable: false, hidden: true, flex:3 },
+            { text: 'IBAN', dataIndex: 'IBAN', editable: false, hidden: true, flex:3 },
+            { text: 'BIC', dataIndex: 'BIC', editable: false, hidden: true, flex:3 }
         ]
         , plugins: {
             pagingtoolbar: {

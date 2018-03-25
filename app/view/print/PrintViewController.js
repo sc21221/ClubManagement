@@ -4,7 +4,7 @@ Ext.define('ClubManagement.view.print.PrintViewController', {
 
     , onPrintMenuSelect: function(t, selected)
     {
-        Ext.Msg.alert("select",selected.data.text);
+        window.open(selected.data.url, selected.data.text);
         console.log(selected.data.text);
     }
 });

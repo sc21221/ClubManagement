@@ -15,6 +15,7 @@
 
         error_log("DbBase::__Construct: vor new mysqli");
         $this->_db = new mysqli('localhost', 'root' ,'', 'clubmgmt');
+        $this->_db->query("SET NAMES 'utf8'");
         error_log("DbBase: __Construct: after new mysqli");
         
         $_db = $this->_db;
@@ -24,6 +25,11 @@
         }
 
         return $_db;
+    }
+
+    public function query($sql)
+    {
+        return $this->_db->query($sql);
     }
 
     public function getTableFromMetadata($params)
@@ -285,8 +291,8 @@
             }
         }
         $sql .= implode(",", $fields);
-        if( $idField == "id")
-            $sql .= " WHERE id='$uId';";
+        if( $idField != "Id")
+            $sql .= " WHERE $idField='$uId';";
         else 
             $sql .= " WHERE Id=$uId;";
         return $sql;

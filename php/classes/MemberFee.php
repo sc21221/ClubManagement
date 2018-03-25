@@ -33,13 +33,13 @@ class MemberFee extends DbBase {
 
         $table = $this->getTableFromMetadata($metadata);
         $idField = $this->getIdKeyFromMetadata($metadata);
-        $sql = "INSERT INTO $table (mitglied_id,beitrag_id) VALUES ";
+        $sql = "INSERT INTO $table (memberId,beitrag_id) VALUES ";
         $values = "";
         $records = $this->getRecordsFromParams($params);
         foreach($records as $record)
         {
             if( $values != "") $values .= ",";
-            $values .= "('" . $record->mitglied_id . "','" . $record->beitrag_id . "')";     
+            $values .= "('" . $record->memberId . "','" . $record->beitrag_id . "')";     
         }
         $sql .= $values;
         error_log("MemberFee:insert: SQL=$sql");
@@ -59,7 +59,7 @@ class MemberFee extends DbBase {
             $beitrag_id = explode("/", $record->id)[1];
             error_log("DbBase:delete() from Table $table Field for Record");
             error_log(print_r($record, true));
-            $sql .= "DELETE FROM $table WHERE mitglied_id='" . $mitglied_id . "' AND beitrag_id='" . $beitrag_id . "';";      
+            $sql .= "DELETE FROM $table WHERE memberId='$mitglied_id' AND beitrag_id='$beitrag_id';";      
         }
         error_log("DbBase:delete(): SQL=$sql");
 

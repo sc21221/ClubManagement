@@ -17,11 +17,11 @@ Ext.define('ClubManagement.view.print.PrintView',{
     items: [{
         xtype: 'dataview',
         cls: 'dataview-print',
-        itemTpl: '<div class="img"><i class="{icon}"></i></div>' +
+        itemTpl: '<a href="{url}" target="_blank"><div class="img"><i class="{icon}"></i></div>' +
             '<div class="content">' +
                 '<div class="name">{text}</div>' +
                 '<div class="affiliation">{description}</div>' +
-            '</div>',
+            '</div></a>',
         store: 'ClubManagement.store.PrintMenuStore',
         selectable: { mode: 'single'},
         plugins: {

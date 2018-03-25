@@ -17,11 +17,14 @@
         , metadata: {
             _table: 'mitglied',
             _sort: 'nachname',
-            _key: 'Id'
+            _key: 'memberId'
         }
         , reader: {
             totalProperty: 'total',
             rootProperty: 'data'
+        }
+        , writer: {
+            dateFormat: 'Y-m-d'
         }
     }
    , autoLoad: true
